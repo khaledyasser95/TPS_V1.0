@@ -22,15 +22,21 @@ public class PlayerState1 : MonoBehaviour {
 	public EMoveState MoveState;
 	public EWeaponState WeaponState;
 
-	private InputController m_inputController;
-	public InputController InputController 
+	private Player_ML m_inputController;
+	public Player_ML InputController 
 	{
 		get{
-			if (m_inputController == null)
-				m_inputController = GameManager.Instance.InputController;
-			return m_inputController;
+            name = this.gameObject.name;
+            if (m_inputController == null) {
+                if (name == "Player")
+                    m_inputController = ML_Manager.Instance.playerInput;
+                else
+                    m_inputController = ML_Manager.Instance2.playerInput;
+            }
+            return m_inputController;
 			}
 	}
+     
 	void Update()
 	{
 		SetMovestate ();
@@ -58,11 +64,11 @@ public class PlayerState1 : MonoBehaviour {
 		if (InputController.Fire1)
 			WeaponState = EWeaponState.FIRING;
 
-		if (InputController.Fire2)
-			WeaponState = EWeaponState.AIMING;
+		//if (InputController.Fire2)
+		//	WeaponState = EWeaponState.AIMING;
 
-		if (InputController.Fire1 && InputController.Fire2)
-			WeaponState = EWeaponState.FIRING;
+		//if (InputController.Fire1 && InputController.Fire2)
+		//	WeaponState = EWeaponState.FIRING;
 	}
 
 

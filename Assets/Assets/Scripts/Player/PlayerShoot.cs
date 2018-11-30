@@ -11,7 +11,7 @@ public class PlayerShoot : MonoBehaviour {
     int currentWeaponIndex;
     bool canFire;
     Transform weaponHolster;
-
+    Player_ML playerInput;
     public Shooter ActiveWeapon
     {
         get
@@ -21,7 +21,11 @@ public class PlayerShoot : MonoBehaviour {
     }
     private void Awake()
     {
-
+        name = this.gameObject.name;
+        if (name == "Player")
+            playerInput = ML_Manager.Instance.playerInput;
+        else
+            playerInput = ML_Manager.Instance2.playerInput;
         canFire = true;
         weaponHolster = transform.Find("Weapons");
         weapons = weaponHolster.GetComponentsInChildren<Shooter>();
@@ -31,10 +35,9 @@ public class PlayerShoot : MonoBehaviour {
     }
     private void Update()
     {
-        if (GameManager.Instance.InputController.MouseWheelDown)
+        if (playerInput.MouseWheelDown)
             SwitchWeapon(1);
-
-        if (GameManager.Instance.InputController.MouseWheelUp)
+        if (playerInput.MouseWheelUp)
             SwitchWeapon(-1);
 
         ///To be done with SPRINTING WALKING
@@ -43,9 +46,14 @@ public class PlayerShoot : MonoBehaviour {
 
         if (!canFire)
             return;
-        if (GameManager.Instance.InputController.Fire1)
+        if (playerInput.Fire1)
         {
+
             activeWeapon.Fire();
+        }
+        if (playerInput.Reload)
+        {
+            activeWeapon.Reload();
         }
     }
     void DeactivateWeapon()

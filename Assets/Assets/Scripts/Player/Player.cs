@@ -66,11 +66,16 @@ public class Player : MonoBehaviour {
 		}
        
 	}
-    InputController playerInput;
+    Player_ML playerInput;
     Vector2 mouseInput;
 	// Use this for initialization
 	void Awake () {
-        playerInput = GameManager.Instance.InputController;
+        name = this.gameObject.name;
+        if (name == "Player")
+            playerInput = ML_Manager.Instance.playerInput;
+        else
+            playerInput = ML_Manager.Instance2.playerInput;
+
         GameManager.Instance.LocalPlayer = this;
         if (MouseControl.LockMouse)
         {

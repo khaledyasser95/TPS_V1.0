@@ -13,9 +13,6 @@ public class AssultRiffle : Shooter {
     }
     private void Update()
     {
-        if ( GameManager.Instance.InputController.Reload)
-        {
-            Reload();
-        }
+        
     }
 }
